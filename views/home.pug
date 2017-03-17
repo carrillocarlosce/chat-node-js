@@ -1,0 +1,35 @@
+extends ./layout.pug
+
+block content
+	.container
+		.col-md-6
+			.panel.panel-info#messageArea(style='display:none;')
+				.panel-heading
+					p User
+				div(style='height:300px;overflow:auto')
+					.panel-body
+						#chat
+				.panel-footer
+					form(id="messageForm")
+						div(class="input-group")
+							input(type="text" class="form-control" id='message' autocomplete='off' placeholder="Write your message...")
+							span(class="input-group-btn")
+								button(class="btn btn-info" type="submit")
+									I.glyphicon.glyphicon-share-alt(style='line-height:20px')
+		.col-md-6
+			.panel.panel-info
+				.panel-heading
+					h4 Usuarios Conectados
+				.panel-body
+					ul.list-group
+						#users
+			.panel.panel-info#userFormArea
+				.panel-heading
+					h4 Iniciar Session
+				.panel-body
+					form(id="userForm")
+						div(class="form-group")
+							label(for="username") Nombre de Usuario
+							input(type="text" class="form-control" id='user' autocomplete='off' placeholder="Introduce tu Nombre de Usuario")
+
+							button(class="btn btn-info" type="submit" style='margin-top:10px') Iniciar Sesion!
