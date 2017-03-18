@@ -1,0 +1,30 @@
+extends ./layout.pug
+
+block content
+	div(class='container' style='margin-top: 50px;')
+		div(class='col-md-6 col-md-offset-3')
+			div(class='panel panel-info')
+				div(class='panel-heading')
+					h4.text-center Registrarse
+				div(class='panel-body')
+					if (err)
+						div.alert.alert-danger #{err}
+					form(method='POST')
+						div(class='form-group')
+							label(for='email') Usuario
+							input(type='text',name='username',placeholder='Nombre de Usuario',id='email' class='form-control')
+						div(class='form-group')
+							label(for='username') Email
+							input(type='text',name='email',placeholder='Correo Electronico',id='username' class='form-control')
+						div(class='form-group')
+							label(for='pass') Contraseña
+							input(type='password',name='password',placeholder='Contraseña',id='pass' class='form-control')
+						div(class='form-group')
+							label(for='pass2') Confirmar Contraseña
+							input(type='password',name='password_confirmation',placeholder='Confirmar Contraseña',id='pass2' class='form-control')
+						div(class='row')
+							div(class='col-md-6')
+								input(type='submit' class='btn btn-info btn-block' value='Registrarse')
+							div(class='col-md-6')
+								a(href='/signin' class='btn btn-info btn-block') Ya tienes cuenta?
+			

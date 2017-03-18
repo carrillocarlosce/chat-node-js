@@ -13,14 +13,40 @@ $(function () {
 	var $username = $('#user');
 	var $thisuser = '';
 
+	var $status = $('#status');
+
+	var $statusDefault = $('#status').text();
+
 	$('#messageForm').submit(function(e) {
 		e.preventDefault();
 		socket.emit('Send Message', $message.val());
+		$chat.append($('<div class="container-fluid row"><span class="chat-msg alert alert-info" style="float:right"><b>Tu: </b>'+$message.val()+'</span></div>'))
 		$message.val('');
+		scrollDown()
 	})
 
+	setStatus = function(s) {
+		$('#status').text(s)
+
+		if (s != $statusDefault) {
+			var delay = setTimeout(function() {
+				$('#status').text($statusDefault)
+				clearInterval(delay)
+			}, 3000);
+		}
+	}
+	scrollDown = function() {
+		document.getElementById("scroll").scrollTop = document.getElementById("chat").scrollHeight;
+	}
+	scrollDown();
+	socket.on('All Messages', function(data) {
+		console.log(data)
+	})
+	socket.on('Status',function(data) {
+		setStatus(data)
+	})
 	socket.on('New Message',function(data) {
-		if (data.user != $thisuser) {
+		if (data.user) {
 			var classes = 'style="float:left"'
 			var alertcolor = 'alert-success'
 		}else{
@@ -28,22 +54,13 @@ $(function () {
 			var alertcolor = 'alert-info'
 		}
 		$chat.append($('<div class="container-fluid row"><span class="chat-msg alert '+alertcolor+'" '+classes+'><b>'+data.user+': </b>'+data.msg+'</span></div>'))
-		document.getElementById("scroll").scrollTop = document.getElementById("chat").scrollHeight;
+		scrollDown()
 		if (data.user != $thisuser) {
 			audio.play();
 		}else{}
 	})
 
-	$('#userForm').submit(function(e) {
-		e.preventDefault();
-		socket.emit('New User', $username.val(),function(data) {
-			if (data) {
-				$thisuser = $username.val();
-				$userFormArea.hide();
-				$messageArea.show();
-			}
-		});
-	})
+	socket.emit('New User');
 
 	socket.on('Get Users',function(data) {
 		// body...

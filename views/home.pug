@@ -1,14 +1,29 @@
 extends ./layout.pug
 
+
 block content
+	script(src='./script.js')
+	script(type='text/javascript')
+	a.btn.btn-warning(href="/logout") Cerrar Session
 	.container
 		.col-md-6
-			.panel.panel-info#messageArea(style='display:none;')
+			.panel.panel-info#messageArea(style='display:block;')
 				.panel-heading
 					p User
 				div#scroll(style='height:300px;overflow:auto')
 					.panel-body
 						#chat
+							for message in messages
+								if(message.user == user)
+									div(class="container-fluid row")
+										span(class="chat-msg alert alert-info" style='float:right;')
+											b #{message.user}: 
+											span #{message.msg}
+								else
+									div(class="container-fluid row")
+										span(class="chat-msg alert alert-success" style='float:left;')
+											b #{message.user}: 
+											span #{message.msg}
 				.panel-footer
 					form(id="messageForm")
 						div(class="input-group")
@@ -16,6 +31,7 @@ block content
 							span(class="input-group-btn")
 								button(class="btn btn-info" type="submit")
 									I.glyphicon.glyphicon-share-alt(style='line-height:20px')
+					b.text-success#status Status
 		.col-md-6
 			.panel.panel-info
 				.panel-heading
@@ -23,13 +39,3 @@ block content
 				.panel-body
 					ul.list-group
 						#users
-			.panel.panel-info#userFormArea
-				.panel-heading
-					h4 Iniciar Session
-				.panel-body
-					form(id="userForm")
-						div(class="form-group")
-							label(for="username") Nombre de Usuario
-							input(type="text" class="form-control" id='user' autocomplete='off' placeholder="Introduce tu Nombre de Usuario")
-
-							button(class="btn btn-info" type="submit" style='margin-top:10px') Iniciar Sesion!
