@@ -3,7 +3,7 @@ var pug = require('pug');
 
 var app = express();
 
-var server = app.listen(80)
+var server = app.listen(8080)
 
 var io = require('socket.io').listen(server);
 
