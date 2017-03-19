@@ -1,7 +1,7 @@
 var mongo = require('mongoose');
 var Schema = mongo.Schema; 
 
-mongo.connect('mongodb://'+process.env.MONGODB_USER+':'+process.env.MONGODB_PASSWORD+'@127.0.0.1:27017/chat')
+mongo.connect('mongodb://127.0.0.1:27017/chat')
 
 var msg_schema = new Schema({
 	 user: String,
